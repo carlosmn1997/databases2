@@ -35,7 +35,7 @@ CREATE TABLE Posee(
 	FOREIGN KEY (DNI) REFERENCES Cliente(DNI),
 	FOREIGN KEY (IBAN)	REFERENCES Cuenta(IBAN)
 );
-
+/*
 CREATE TABLE Transferencia(
 	codigo VARCHAR(150) NOT NULL,
 	fecha DATE NOT NULL,
@@ -60,5 +60,20 @@ CREATE TABLE IngresoRetirada(
 	oficina VARCHAR(15) NOT NULL,
 	PRIMARY KEY (codigo,IBANDestino),
 	FOREIGN KEY (IBANOrigen) REFERENCES Cuenta(IBAN),
+	FOREIGN KEY (oficina) REFERENCES Oficina(codigo)
+);
+*/
+CREATE TABLE Operacion(
+	codigo VARCHAR(150) NOT NULL,
+	fecha DATE NOT NULL,
+	hora VARCHAR(8) NOT NULL,
+	cantidad DECIMAL(10,0) NOT NULL,
+	descripcion VARCHAR(400),
+    IBANOrigen VARCHAR(150) NOT NULL,
+	IBANDestino VARCHAR(150),
+	oficina VARCHAR(15),
+	PRIMARY KEY (codigo,IBANDestino),
+	FOREIGN KEY (IBANOrigen) REFERENCES Cuenta(IBAN),
+	FOREIGN KEY (IBANDestino) REFERENCES Cuenta(IBAN),
 	FOREIGN KEY (oficina) REFERENCES Oficina(codigo)
 );
