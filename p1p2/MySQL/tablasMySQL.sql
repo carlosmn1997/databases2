@@ -5,7 +5,7 @@ CREATE TABLE Cliente(
 	edad INTEGER NOT NULL,
 	Direccion VARCHAR(100) NOT NULL,
 	email VARCHAR(100),
-	Telefono INTEGER NOT NULL,	
+	Telefono VARCHAR(15) NOT NULL,	
 	PRIMARY KEY (DNI)
 );
 
