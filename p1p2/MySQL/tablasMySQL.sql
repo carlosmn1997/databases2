@@ -12,7 +12,7 @@ CREATE TABLE Cliente(
 CREATE TABLE Oficina(
 	codigo VARCHAR(15) NOT NULL,
 	direccion VARCHAR(100) NOT NULL,
-	telefono INTEGER NOT NULL,
+	telefono VARCHAR(15) NOT NULL, /* mejor varchar para especificar formato */
 	PRIMARY KEY (codigo)
 );
 
@@ -38,6 +38,7 @@ CREATE TABLE Posee(
 
 CREATE TABLE Operacion(
 	codigo VARCHAR(150) NOT NULL,
+	tipo VARCHAR(20) NOT NULL,
 	fecha DATE NOT NULL,
 	hora VARCHAR(8) NOT NULL,
 	cantidad DECIMAL(10,2) NOT NULL,
