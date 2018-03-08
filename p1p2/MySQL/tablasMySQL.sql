@@ -1,3 +1,9 @@
+DROP TABLE Operacion;
+DROP TABLE Posee;
+DROP TABLE Cuenta;
+DROP TABLE Oficina;
+DROP TABLE Cliente;
+
 CREATE TABLE Cliente(
 	DNI VARCHAR(10) NOT NULL,
 	nombre VARCHAR(100) NOT NULL,
@@ -46,7 +52,7 @@ CREATE TABLE Operacion(
     IBANOrigen VARCHAR(150) NOT NULL,
 	IBANDestino VARCHAR(150),
 	oficina VARCHAR(15),
-	PRIMARY KEY (codigo,IBANDestino),
+	PRIMARY KEY (codigo, IBANOrigen),
 	FOREIGN KEY (IBANOrigen) REFERENCES Cuenta(IBAN),
 	FOREIGN KEY (IBANDestino) REFERENCES Cuenta(IBAN),
 	FOREIGN KEY (oficina) REFERENCES Oficina(codigo)
