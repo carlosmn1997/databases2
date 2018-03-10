@@ -1,0 +1,22 @@
+Oracle permite utilizar este gestor para desarrollar, prototipar y lanzar aplicaciones
+para procesado de operaciones internas de datos. También permite distribuir los
+programas con sus aplicaciones y desarrollar licencias propias para nuestros programas
+siempre que cumplan con los terminos de la licencia.
+
+Tampoco está permitido nombrar ninguno de los programas/aplicaciones creados con
+este gestor con la palabra "ORACLE" formando parte del nombre o con otra derivacion
+como "ORA" que pueda relacionarse con la empresa.
+
+No está permitida la descompilación o ingeniería inversa sobre los programas ni
+permitir esto. Tampoco se pueden modificar los derechos del programa o modificar
+los resultados de los benchmark test sobre los programas en beneficio del creador.
+
+No esta permitido el uso o distribución de este gestor a cualquier persona, ya sea
+nacionalizado o residente, que esté bajo el control del gobierno de Cuba, Irán, 
+Sudán, Libia, Corea del Norte, Siria o cualquier otro país al que Estados Unidos 
+haya prohibido la exportación.
+
+A su vez, no se puede utilizar para ninguna acción que no permita la ley de EEUU,
+sobre todo nombrando el desarollo de armas de destrucción masiva.
+
+http://www.oracle.com/technetwork/licenses/xe-license-152020.html
