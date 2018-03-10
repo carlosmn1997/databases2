@@ -1,0 +1,22 @@
+MySQL puede ser usado sin coste si la aplicación está desarrollada localmente
+y no tiene un uso comercial.
+Solo cuando el objetivo de esta aplciación es ser vendida a unos clientes aparece
+la cuestión de la licencia comercial.
+
+MySQL puede ser usado gratuitamete en una pagina web. Si también se crea una
+aplicación PHP y se instala en un servidor web, no es necesario hacer tu código
+PHP open source en el sentido de GPL.
+
+Finally, MySQL license can be used free of charge for all projects that 
+themselves run under the GPL or comparable free license. (If you have developed 
+a new free e-mail client for Linux, say, and wish to store e-mails in 
+a MySQL database, you may do so without further ado.)
+
+Finalmete, MySQL license puede ser usado gratuitamente para todo los proyectos
+que funcionan bajo GPL u otras licencias gratuitas similares.
+
+Está estrictamente prohibido en el sentido de GPL cambiar, extender o vender
+nuevas versiones del código sin permitir que todo el mundo pueda utiliar tu
+código gratuitamente. Tampoco puedes desarrollar una nueva base de datos basada
+en MySQL. MySQL ofrece licencias de pago comerciales que permiten ciertas acciones no
+permitidas con la licencia GPL.
