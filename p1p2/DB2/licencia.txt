@@ -1,0 +1,5 @@
+DB2 Express-C es la versión gratuita del sistema gestor de bases de datos de IBM.
+IBM permite con esta versión desarrollar, utilizar en la producción y distribuir
+el trabajo realizado con o sobre este sistema gestor de bases de datos.
+
+db2express.com/es/
