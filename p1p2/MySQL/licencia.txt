@@ -20,3 +20,5 @@ nuevas versiones del código sin permitir que todo el mundo pueda utiliar tu
 código gratuitamente. Tampoco puedes desarrollar una nueva base de datos basada
 en MySQL. MySQL ofrece licencias de pago comerciales que permiten ciertas acciones no
 permitidas con la licencia GPL.
+
+http://searchitchannel.techtarget.com/feature/Using-MySQL-licensing-Open-source-license-vs-commercial-license
