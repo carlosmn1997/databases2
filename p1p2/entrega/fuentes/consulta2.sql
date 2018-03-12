@@ -16,4 +16,7 @@ GROUP BY Oficina;
 
 SELECT codigo, direccion FROM Oficina
 WHERE (codigo IN (SELECT codigo FROM topOficinas)) AND
-(codigo IN (SELECT codigo FROM topRetiradas WHERE numRetiradas = (SELECT Max(numRetiradas) FROM topRetiradas)))
+(codigo IN (SELECT codigo FROM topRetiradas WHERE numRetiradas = (SELECT Max(numRetiradas) FROM topRetiradas)));
+
+DROP VIEW topOficinas;
+DROP VIEW topRetiradas;
