@@ -1,118 +1,59 @@
---Oracle 11g Express Edition
--- Put your Oracle SQL statement here and execute it
-
-select banner as "oracle version" from v$version;
 
 
-/* ELIMINAR TIPOS Y TABLAS SI EXISTIAN */
-DROP TABLE Cliente FORCE;
-DROP TABLE Cuenta FORCE;
-DROP TABLE Oficina FORCE;
-DROP TABLE Operacion FORCE;
+DROP TABLE Cliente;
+DROP TABLE Cuenta;
+DROP TABLE Oficina;
+DROP TABLE CuentaCorriente;
+DROP TABLE CuentaAhorro;
 
-DROP TYPE array_cuentas FORCE;
-DROP TYPE array_clientes FORCE;
-DROP TYPE array_operaciones FORCE;
-DROP TYPE array_transferencias FORCE;
-DROP TYPE array_cuentas_corrientes FORCE;
+DROP TYPE ClienteUdt;
+DROP TYPE CuentaUdt;
+DROP TYPE OficinaUdt;
 
-DROP TYPE RetiradaUdt FORCE;
-DROP TYPE IngresoUdt FORCE;
-DROP TYPE TransferenciaUdt FORCE;
-DROP TYPE OperacionUdt FORCE;
-DROP TYPE OficinaUdt FORCE;
-DROP TYPE CuentaCorrienteUdt FORCE;
-DROP TYPE CuentaAhorroUdt FORCE;
-DROP TYPE CuentaCorrienteUdt FORCE;
-DROP TYPE ClienteUdt FORCE;
-DROP TYPE CuentaUdt FORCE;
-
-
-
-
-/* BLOQUE DECLARACION TIPOS Y ARRAYS */
-SET SERVEROUTPUT ON;
-
-/* De Cliente <-> Cuenta */
-CREATE TYPE ClienteUdt;
-/
-CREATE TYPE CuentaUdt;
-/
-
-/* De cuentaCorriente <-> Banco*/
-CREATE TYPE CuentaCorrienteUdt;
-/
-
-
-/* De Cuenta <-> Operacion */
-CREATE TYPE OperacionUdt;
-/
-
-/* De Cuenta <-> Transferencia */
-
-CREATE TYPE TransferenciaUdt;
-/
-
-
-/* VARRAYS QUE SE NECESITAN */
-CREATE TYPE array_cuentas AS VARRAY(50) of REF CuentaUdt;
-/
-
-CREATE TYPE array_clientes AS VARRAY(20) of REF ClienteUdt;
-/
-
-CREATE TYPE array_operaciones AS VARRAY(100) of REF OperacionUdt;
-/
-
-CREATE TYPE array_transferencias AS VARRAY(100) of REF TransferenciaUdt;
-/
-
-CREATE TYPE array_cuentas_corrientes AS VARRAY(100) of REF CuentaCorrienteUdt;
-/
-
-
-/*---------------- DEFINICION DE TIPOS -------------- */
-
-CREATE TYPE ClienteUdt AS OBJECT (
+CREATE TYPE ClienteUdt AS (
 	nombre	VARCHAR(100),
 	apellido VARCHAR(100),
 	DNI VARCHAR(10),
 	edad INTEGER,
 	direccion VARCHAR(100),
 	email VARCHAR(100),
-	telefono INTEGER,
-	cuentas array_cuentas
-)
-NOT FINAL;
-/
+	telefono INTEGER
+);
 
-
-CREATE TYPE OficinaUdt AS OBJECT(
-  codigo VARCHAR(10),
-  direccion VARCHAR(50),
-  telefono VARCHAR(10),
-  cuentas array_cuentas_corrientes
-)
-NOT FINAL;
-/
-
-CREATE TYPE CuentaUdt AS OBJECT(
+CREATE TYPE CuentaUdt AS (
 	IBAN VARCHAR(150),
 	numero INTEGER,
 	saldo DECIMAL(10,2),
-	fechaCreacion DATE,
-	clientes array_clientes,
-	operaciones array_operaciones,
-    	transferencias array_transferencias
-)
-NOT FINAL;
-/
+	fechaCreacion DATE
+);
+
+CREATE TYPE OficinaUdt AS (
+  codigo VARCHAR(10),
+  direccion VARCHAR(50),
+  telefono VARCHAR(10)
+);
+
+
+CREATE TABLE Cliente of ClienteUdt;
+
+CREATE TABLE Cuenta of CuentaUdt;
+
+CREATE TABLE Oficina of OficinaUdt;
+
+CREATE TABLE CuentaCorriente(
+	oficina OficinaUdt REFERENCES Oficina(codigo)
+) INHERITS (Cuenta);
+
+
+
+
+
 
 CREATE OR REPLACE TYPE CuentaCorrienteUdt UNDER CuentaUdt(
   oficina ref OficinaUdt
 );
 /
-  
+
 CREATE OR REPLACE TYPE CuentaAhorroUdt UNDER CuentaUdt(
    interes DECIMAL(3,2)
 );
