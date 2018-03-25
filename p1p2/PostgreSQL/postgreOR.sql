@@ -1,126 +1,80 @@
+/* ELIMINACION DE TABLAS */
 
-
-DROP TABLE Cliente;
-DROP TABLE Cuenta;
-DROP TABLE Oficina;
-DROP TABLE CuentaCorriente;
-DROP TABLE CuentaAhorro;
-
-DROP TYPE ClienteUdt;
-DROP TYPE CuentaUdt;
-DROP TYPE OficinaUdt;
-
-CREATE TYPE ClienteUdt AS (
-	nombre	VARCHAR(100),
-	apellido VARCHAR(100),
-	DNI VARCHAR(10),
-	edad INTEGER,
-	direccion VARCHAR(100),
-	email VARCHAR(100),
-	telefono INTEGER
-);
-
-CREATE TYPE CuentaUdt AS (
-	IBAN VARCHAR(150),
-	numero INTEGER,
-	saldo DECIMAL(10,2),
-	fechaCreacion DATE
-);
-
-CREATE TYPE OficinaUdt AS (
-  codigo VARCHAR(10),
-  direccion VARCHAR(50),
-  telefono VARCHAR(10)
-);
-
-
-CREATE TABLE Cliente of ClienteUdt;
-
-CREATE TABLE Cuenta of CuentaUdt;
-
-CREATE TABLE Oficina of OficinaUdt;
-
-CREATE TABLE CuentaCorriente(
-	oficina OficinaUdt REFERENCES Oficina(codigo)
-) INHERITS (Cuenta);
-
-
-
-
-
-
-CREATE OR REPLACE TYPE CuentaCorrienteUdt UNDER CuentaUdt(
-  oficina ref OficinaUdt
-);
-/
-
-CREATE OR REPLACE TYPE CuentaAhorroUdt UNDER CuentaUdt(
-   interes DECIMAL(3,2)
-);
-/
-
-
-CREATE TYPE OperacionUdt AS OBJECT(
-  	codigo VARCHAR(150),
-	IBANOrigen VARCHAR(150),
-	fecha DATE,
-	hora VARCHAR(8),
-	cantidad DECIMAL(10,2),
-	descripcion VARCHAR(400)
-)
-NOT FINAL;
-/
-
-
-CREATE TYPE TransferenciaUdt UNDER OperacionUdt(
-    IBANDestino ref CuentaUdt
-)
-NOT FINAL;
-/
-
-CREATE TYPE IngresoUdt UNDER OperacionUdt(
-	oficina ref OficinaUdt
-)
-NOT FINAL;
-/
-
-CREATE TYPE RetiradaUdt UNDER OperacionUdt(
-	oficina ref OficinaUdt
-)
-NOT FINAL;
-/
-
+DROP TABLE Transferencia CASCADE;
+DROP TABLE Ingreso CASCADE;
+DROP TABLE Retirada CASCADE;
+DROP TABLE Posee CASCADE;
+DROP TABLE Cliente CASCADE;
+DROP TABLE Oficina CASCADE;
+DROP TABLE CuentaCorriente CASCADE;
+DROP TABLE CuentaAhorro CASCADE;
+DROP TABLE Cuenta CASCADE;
+DROP TABLE Operacion CASCADE;
 
 /* CREACION DE TABLAS */
 
-CREATE TABLE Cliente OF ClienteUdt(
-	nombre	NOT NULL,
-	apellido NOT NULL,
-	dni PRIMARY KEY,
-	edad NOT NULL,
-	telefono NOT NULL,
-	direccion NOT NULL,
-	cuentas NOT NULL
+CREATE TABLE Cliente(
+	nombre	VARCHAR(100) NOT NULL,
+	apellido VARCHAR(100) NOT NULL,
+	DNI VARCHAR(10) PRIMARY KEY,
+	edad INTEGER NOT NULL,
+	direccion VARCHAR(100) NOT NULL,
+	email VARCHAR(100),
+	telefono INTEGER NOT NULL
 );
 
-
-CREATE TABLE Cuenta OF CuentaUdt(
-	IBAN PRIMARY KEY,
-	numero NOT NULL,
-	saldo NOT NULL,
-	fechaCreacion NOT NULL,
-	clientes NOT NULL
-) object id system generated;
-
-
-CREATE TABLE Oficina OF OficinaUdt(
-	codigo PRIMARY KEY,
-  	direccion NOT NULL,
-  	telefono NOT NULL
+CREATE TABLE Cuenta(
+	IBAN VARCHAR(150) PRIMARY KEY,
+	numero INTEGER NOT NULL,
+	saldo DECIMAL(10,2) NOT NULL,
+	fechaCreacion DATE NOT NULL
 );
 
-
-CREATE TABLE Operacion OF OperacionUdt(
-	PRIMARY KEY(codigo, IBANOrigen),
-	FOREIGN KEY(IBANOrigen) REFERENCES Cuenta(IBAN)
+CREATE TABLE Posee(
+	DNI VARCHAR(10) NOT NULL,
+	IBAN VARCHAR(150) NOT NULL,
+	PRIMARY KEY (DNI,IBAN),
+	FOREIGN KEY (DNI) REFERENCES Cliente(DNI),
+	FOREIGN KEY (IBAN)	REFERENCES Cuenta(IBAN)
 );
+
+CREATE TABLE Oficina(
+	codigo VARCHAR(10) PRIMARY KEY,
+	direccion VARCHAR(50) NOT NULL,
+	telefono VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE CuentaCorriente(
+	oficina VARCHAR(10) REFERENCES Oficina(codigo) NOT NULL
+) INHERITS (Cuenta);
+
+CREATE TABLE CuentaAhorro(
+  interes DECIMAL(3,2) NOT NULL
+) INHERITS (Cuenta);
+
+
+CREATE TABLE Operacion(
+  codigo VARCHAR(150) NOT NULL,
+	IBANOrigen VARCHAR(150) NOT NULL,
+	fecha DATE NOT NULL,
+	hora VARCHAR(8) NOT NULL,
+	cantidad DECIMAL(10,2) NOT NULL,
+	descripcion VARCHAR(400),
+	PRIMARY KEY (codigo, IBANOrigen),
+	FOREIGN KEY (IBANOrigen) REFERENCES Cuenta(IBAN)
+);
+
+CREATE TABLE Transferencia(
+    IBANDestino VARCHAR(150) NOT NULL,
+		FOREIGN KEY (IBANDestino) REFERENCES Cuenta(IBAN)
+) INHERITS (Operacion);
+
+CREATE TABLE Ingreso(
+    oficina VARCHAR(15),
+		FOREIGN KEY (oficina) REFERENCES Oficina(codigo)
+) INHERITS (Operacion);
+
+CREATE TABLE Retirada(
+    oficina VARCHAR(15),
+		FOREIGN KEY (oficina) REFERENCES Oficina(codigo)
+) INHERITS(Operacion);
