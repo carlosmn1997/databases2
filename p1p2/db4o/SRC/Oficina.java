@@ -1,4 +1,6 @@
 
+import java.util.*;
+
 public class Oficina
 {
 	private String codigo;
@@ -12,8 +14,8 @@ public class Oficina
 		this.codigo=codigo;
 		this.direccion=direccion;
 		this.telefono=telefono;
-		this.corrientes = new arrayList();
-		this.ops = new arrayList();
+		this.corrientes = new ArrayList();
+		this.ops = new ArrayList();
 	}
 
 	public String getCodigo(){ return this.codigo; }
@@ -35,6 +37,8 @@ public class Oficina
 
 	public void addOps( IngresoRetirada ir ){ this.ops.add(ir); }
 
-
+	public String toString() {
+        	return direccion;
+    	}
 
 }

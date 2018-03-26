@@ -1,13 +1,15 @@
 
+import java.util.*;
+
 public class Cuenta
 {
-	private String IBAN;
-	private int numero;
-	private double saldo;
-	private String fechaCreacion;
-	private List<Cliente> clientes;
-	private List<Operacion> operaciones;
-	private List<Transferencias> recibidas;
+	protected String IBAN;
+	protected int numero;
+	protected double saldo;
+	protected String fechaCreacion;
+	protected List<Cliente> clientes;
+	protected List<Operacion> operaciones;
+	protected List<Transferencia> recibidas;
 
 	public Cuenta(String IBAN, int numero, double saldo, String fechaCreacion)
 	{
@@ -15,9 +17,9 @@ public class Cuenta
 		this.numero=numero;
 		this.saldo=saldo;
 		this.fechaCreacion=fechaCreacion;
-		this.clientes=new arrayList();
-		this.operaciones=new arrayList();
-		this.recibidas=new arrayList();
+		this.clientes=new ArrayList();
+		this.operaciones=new ArrayList();
+		this.recibidas=new ArrayList();
 	}
 
 	public String getIBAN(){ return this.IBAN; }
@@ -45,5 +47,9 @@ public class Cuenta
 
 	public void addOperacion( Operacion o ){ this.operaciones.add(o); }
 
-	public void addRecibida( Transferencia t ){ this.recibidas.add(r); }	
+	public void addRecibida( Transferencia t ){ this.recibidas.add(t); }	
+
+    	public String toString() {
+    	    return IBAN+" -> "+saldo;
+   	 }
 }

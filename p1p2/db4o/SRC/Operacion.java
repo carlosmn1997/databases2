@@ -32,7 +32,7 @@ public class Operacion
 	public String getDescripcion(){ return this.descripcion; }
 	public void setDescripcion( String des ){ this.descripcion=des; }
 
-	public double getCuentaOrigen(){ return this.c; }
+	public Cuenta getCuentaOrigen(){ return this.c; }
 	public void setCuentaOrigen( Cuenta c ){ this.c=c; }
 
 

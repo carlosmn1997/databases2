@@ -3,6 +3,8 @@
  * Date: March 15, 2014
  */
 
+import java.util.*;
+
 public class Cliente {
 
     private String nombre;
@@ -12,15 +14,16 @@ public class Cliente {
     private int edad;
     private String email;
     private String direccion;
+    private List<Cuenta> cuentas;
 
-    public Cliente(String name, String telefono, String apellidos, String DNI,
-                   int edad, String direccion) {
+    public Cliente(String name, String telefono, String apellidos, String DNI,int edad, String direccion) {
       this.nombre=name;
       this.telefono=telefono;
       this.apellidos=apellidos;
       this.DNI=DNI;
       this.edad=edad;
       this.direccion=direccion;
+      this.cuentas=new ArrayList();
     }
 
     public void setNombre(String name){ this.nombre=name;}
@@ -36,7 +39,7 @@ public class Cliente {
     public String getDNI(){return this.DNI;}
 
     public void setEdad(int edad){ this.edad=edad;}
-    public String getEdad(){return this.edad;}
+    public int getEdad(){return this.edad;}
 
     public void setDireccion(String direccion){ this.direccion=direccion;}
     public String getDireccion(){return this.direccion;}
@@ -44,8 +47,12 @@ public class Cliente {
     public void setEmail(String email){ this.email=email;}
     public String getEmail(){return this.email;}
 
+    public List getCuentas(){ return this.cuentas; }
+    public void setCuentas( List l ){ this.cuentas=l; }
+
+    public void addCuenta(Cuenta c){this.cuentas.add(c);}
     
     public String toString() {
-        return name+"/"+points;
+        return nombre+" "+apellidos+" - "+DNI;
     }
 }
