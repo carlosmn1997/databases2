@@ -55,5 +55,33 @@ insert into Operacion VALUES (TransferenciaUdt(6, TO_DATE( '2001-01-02' , 'YYYY-
 
 CALL relacionClienteCuenta('34-3480976', 'DE33 7520 1499 2492 9685 27');
 
-select cuentas from cliente where dni='34-3480976';
+CALL relacionClienteCuenta('34-3480976', 'MD72 OY6E HSY7 0HZK AM0D PAB0');
+
+/* PRUEBAS */
+
+-- Habilitamos la salida estandar
+SET SERVEROUTPUT ON;
+
+
+-- Mostramos el IBAN de las cuentas asociadas a 34-3480976
+
+DECLARE
+	iban_cuenta VARCHAR(150);
+	cuenta_ref_var REF CuentaUdt;
+	cuentas_ref_var array_cuentas;
+BEGIN
+	SELECT c.cuentas INTO cuentas_ref_var FROM Cliente c WHERE DNI = '34-3480976';
+
+	FOR i IN cuentas_ref_var.FIRST .. cuentas_ref_var.LAST LOOP
+		cuenta_ref_var := cuentas_ref_var(i);
+		SELECT IBAN INTO iban_cuenta FROM Cuenta c WHERE ref(c) = cuenta_ref_var;
+	DBMS_OUTPUT.PUT_LINE('IBAN: ' || iban_cuenta);
+	END LOOP;
+END;
+/
+
+-- Miramos si estan los de tipo operacion
+
+SELECT TREAT(VALUE(o) AS RetiradaUdt)
+  FROM Operacion o;
 
