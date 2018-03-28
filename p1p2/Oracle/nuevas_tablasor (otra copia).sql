@@ -1,3 +1,7 @@
+--Oracle 11g Express Edition
+-- Put your Oracle SQL statement here and execute it
+
+
 /* ELIMINAR TABLAS SI EXISTIAN */
 
 BEGIN
@@ -7,6 +11,19 @@ BEGIN
   END;
 /
 
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE CuentaCorriente FORCE';
+  EXCEPTION
+    WHEN OTHERS THEN NULL;
+  END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE CuentaAhorro FORCE';
+  EXCEPTION
+    WHEN OTHERS THEN NULL;
+  END;
+/
 
 BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE Cuenta FORCE';
@@ -17,6 +34,27 @@ BEGIN
 
 BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE Oficina FORCE';
+  EXCEPTION
+    WHEN OTHERS THEN NULL;
+  END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE Ingreso FORCE';
+  EXCEPTION
+    WHEN OTHERS THEN NULL;
+  END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE Retirada FORCE';
+  EXCEPTION
+    WHEN OTHERS THEN NULL;
+  END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE Transferencia FORCE';
   EXCEPTION
     WHEN OTHERS THEN NULL;
   END;
@@ -172,28 +210,10 @@ CREATE TYPE CuentaUdt AS OBJECT(
 	numero INTEGER,
 	saldo DECIMAL(10,2),
 	fechaCreacion DATE,
-	clientes array_clientes,
-	MAP MEMBER FUNCTION get_IBAN RETURN VARCHAR2,
-	MEMBER FUNCTION show RETURN VARCHAR2
+	clientes array_clientes
 )
 NOT FINAL;
 /
-
-
-CREATE OR REPLACE TYPE BODY CuentaUdt AS
- MAP MEMBER FUNCTION get_IBAN RETURN VARCHAR2 IS
- BEGIN
-   RETURN IBAN;
- END;
--- function that can be overriden by subtypes
- MEMBER FUNCTION show RETURN VARCHAR2 IS
- BEGIN
-   RETURN 'IBAN: ' || IBAN || ', Numero: ' || TO_CHAR(numero);
- END;
- 
-END;
-/
-
 
 CREATE TYPE OficinaUdt AS OBJECT(
   codigo VARCHAR(10),
@@ -205,20 +225,10 @@ NOT FINAL;
 
 
 
-CREATE TYPE CuentaCorrienteUdt UNDER CuentaUdt(
-  oficina ref OficinaUdt,
-  OVERRIDING MEMBER FUNCTION show RETURN VARCHAR2
+CREATE OR REPLACE TYPE CuentaCorrienteUdt UNDER CuentaUdt(
+  oficina ref OficinaUdt
 )
 NOT FINAL;
-/
-
-CREATE OR REPLACE TYPE BODY CuentaCorrienteUdt AS
- OVERRIDING MEMBER FUNCTION show RETURN VARCHAR2 IS
- BEGIN
-    RETURN show || ' -- Oficina: ';
- END;
- 
-END;
 /
   
 CREATE OR REPLACE TYPE CuentaAhorroUdt UNDER CuentaUdt(
@@ -234,7 +244,7 @@ CREATE TYPE OperacionUdt AS OBJECT(
 	hora VARCHAR(8),
 	cantidad DECIMAL(10,2),
 	descripcion VARCHAR(400),
-	cuentaOrigen ref CuentaUdt
+	IBANOrigen ref CuentaUdt
 )
 NOT FINAL;
 /
@@ -287,88 +297,11 @@ CREATE TABLE Oficina OF OficinaUdt(
   	telefono NOT NULL
 ) object id system generated;
 
-
-CREATE TABLE Operacion OF OperacionUdt(
-  	codigo PRIMARY KEY,
-	fecha NOT NULL,
-	hora NOT NULL,
-	cantidad NOT NULL,
-	cuentaOrigen NOT NULL
+CREATE TABLE CuentaCorriente OF CuentaCorrienteUdt(
+	oficina NOT NULL
 ) object id system generated;
 
 
-CREATE OR REPLACE PROCEDURE relacionClienteCuenta(dniAsociar VARCHAR, ibanAsociar VARCHAR)
-IS
-	cuentas_aux array_cuentas := array_cuentas();
-	clientes_aux array_clientes := array_clientes();
-	cuenta_ref REF CuentaUdt;
-	cliente_ref REF ClienteUdt;
-BEGIN
--- Se hace primero con la tabla Cliente
-EXECUTE IMMEDIATE
-	'SELECT cuentas FROM Cliente WHERE DNI = :1 FOR UPDATE OF cuentas' INTO cuentas_aux USING dniAsociar;
-
-	SELECT ref(C) into cuenta_ref FROM Cuenta C WHERE C.IBAN=ibanAsociar;
-
-	cuentas_aux.EXTEND(1);
-	cuentas_aux(cuentas_aux.LAST) := cuenta_ref;
-
-EXECUTE IMMEDIATE
-	'UPDATE Cliente SET cuentas = :1 WHERE DNI = :2'
-	USING cuentas_aux, dniAsociar;
-
--- Ahora con la tabla Cuenta
-
-EXECUTE IMMEDIATE
-	'SELECT clientes FROM Cuenta WHERE IBAN = :1 FOR UPDATE OF clientes' INTO clientes_aux USING ibanAsociar;
-
-	SELECT ref(C) into cliente_ref FROM Cliente C WHERE C.DNI=dniAsociar;
-
-	clientes_aux.EXTEND(1);
-	clientes_aux(clientes_aux.LAST) := cliente_ref;
-
-EXECUTE IMMEDIATE
-	'UPDATE Cuenta SET clientes = :1 WHERE IBAN = :2'
-	USING clientes_aux, ibanAsociar;
-
-
-END relacionClienteCuenta;
-/
-
-
-
-
-
-CREATE OR REPLACE PROCEDURE relacionClienteCuenta(dniAsociar VARCHAR, ibanAsociar VARCHAR)
-IS
-
-	cuentas_nuevas cuentasDeClientes;
-	cuentas_aux cuentasDeClientes;
-	cuenta_ref REF CuentaUdt;
-	V_COUNT INTEGER;
-	i integer := 0;
-BEGIN
-
-	SELECT C.cuentas into cuentas_aux FROM Cliente C WHERE C.DNI=dniAsociar;
-
-	V_COUNT := cuentas_aux.COUNT;
-	dbms_output.put_line(V_COUNT);
-	cuentas_nuevas := cuentasDeClientes();
-	cuentas_nuevas.extend(V_COUNT+1);
-
-	FOR i IN 1..V_COUNT LOOP
-		dbms_output.put_line('DENTRO BUCLE');
-		cuentas_nuevas(i) := cuentas_aux(i);
-	END LOOP;
-
-	SELECT ref(C) into cuenta_ref FROM Cuenta C WHERE C.IBAN=ibanAsociar;
-	cuentas_nuevas(V_COUNT+1) := cuenta_ref;
-
-	UPDATE Cliente
-	SET cuentas = cuentas_nuevas
-	WHERE DNI=dniAsociar;
-
-
-END;
-/
-
+CREATE TABLE CuentaAhorro OF CuentaAhorroUdt(
+	interes NOT NULL
+) object id system generated;
