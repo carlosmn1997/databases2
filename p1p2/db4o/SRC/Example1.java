@@ -46,6 +46,22 @@ public class Example1 extends Util {
 	    anyadirCuentasAFirstCliente(db);
 	    retrieveClientesFromCuenta(db);
 	    retrieveCuentasFromCliente(db);
+	    System.out.println("------Operacion------");
+            storeFirstCuenta(db);
+	    storeFirstOficina(db);
+	    storeOperacionTrasferencia(db);
+	    storeOperacionIngresoRetirada(db);
+            retrieveAllOperations(db);
+            retrieveOperationByCodigo(db);
+            retrieveOperationBySaldo(db);
+	    retrieveOficinaDeOperacionRetirada(db);
+            updateOperation(db);
+            deleteFirstOperacionByCodigo(db);
+	    System.out.println("------Oficina------");
+	    storeFirstOficina(db);
+	    storeSecondOficina(db);
+	    anyadirCuentaAFirstOficina(db);
+	    retrieveCuentasFromOficina(db);
         } finally {
             db.close();
         }
@@ -226,6 +242,107 @@ public class Example1 extends Util {
 	Cliente c = (Cliente) result.next();
 	System.out.println("Cuentas de " + c.getNombre() + " " + c.getApellidos());
         listResult(c.getCuentas());
+    }
+
+/* AQUI EMPIEZAN LAS PRUEBAS DE LOS DOS TIPOS DE OPERACION */
+
+
+  public static void storeOperacionIngresoRetirada(ObjectContainer db) {
+	ObjectSet result = db
+                .queryByExample( new Oficina("1234-SAN", null, null));
+        Oficina of = (Oficina) result.next();
+	Corriente c = new Corriente(null, "5678-1234-EFGH", 0, 0, null);
+        Operacion op = new IngresoRetirada("abcde", "1/1/80", "00:01", 1050.05, c, of);
+        db.store(op);
+        System.out.println("Stored Operacion" + op);
+    }
+
+    public static void storeOperacionTrasferencia(ObjectContainer db) {
+        ObjectSet result = db
+                .queryByExample(new Cuenta("1234-5678-ABCD", 0, 0.0,null));
+        Cuenta c = (Cuenta) result.next();
+        result = db
+                .queryByExample(new Cuenta("5678-1234-EFGH", 0, 0.0,null));
+        Cuenta c2 = (Cuenta) result.next();
+	Operacion op = new Transferencia("fghij", "2/1/80", "22:00", 500.50, c, c2);
+        db.store(op);
+        System.out.println("Stored Transferecia " + op + " entre " + c + " y " + c2);
+    }
+
+    public static void retrieveAllOperations(ObjectContainer db) {
+        ObjectSet result = db.queryByExample(Operacion.class);
+        listResult(result);
+    }
+
+    public static void retrieveOficinaDeOperacionRetirada(ObjectContainer db) {
+        IngresoRetirada proto = new IngresoRetirada("abcde",null, null, 0,null,null);
+        ObjectSet result = db.queryByExample(proto);
+	IngresoRetirada op = (IngresoRetirada) result.next();
+    	System.out.println("Oficina en la que se ha realizado la operacion abcde \n" + op.getOficina());
+    }
+
+    public static void retrieveOperationByCodigo(ObjectContainer db) {
+        Operacion op = new Operacion("abcde",null, null, 0,null);
+        ObjectSet result = db.queryByExample(op);
+        listResult(result);
+    }
+
+    public static void retrieveOperationBySaldo(ObjectContainer db) {
+        Operacion Account1 = new Operacion(null,null, null, 1050.05,null);
+        ObjectSet result = db.queryByExample(Account1);
+        listResult(result);
+    }
+
+    public static void updateOperation(ObjectContainer db) {
+        ObjectSet result = db
+                .queryByExample(new Operacion("fghij",null, null, 0,null));
+        Operacion found = (Operacion) result.next();
+        found.setFecha("12/1/80");
+        db.store(found);
+        System.out.println("Ahora se data en 12/1/80" + found);
+    }
+
+    public static void deleteFirstOperacionByCodigo(ObjectContainer db) {
+        ObjectSet result = db
+                .queryByExample(new Operacion("fghij",null, null, 0,null));
+        Operacion found = (Operacion) result.next();
+        db.delete(found);
+        System.out.println("Deleted operacion" + found);
+    }
+
+
+/* AQUI EMPIEZAN LAS PRUEBAS DE OFICINA */
+
+    public static void storeFirstOficina(ObjectContainer db) {
+	Oficina of = new Oficina("1234-SAN", "Calle Marujas ZGZ", "976123456");
+        db.store(of);
+        System.out.println("Stored Oficina" + of);
+    }
+
+    public static void storeSecondOficina(ObjectContainer db) {
+	Oficina of = new Oficina("5678-BBVA", "Avenida Perico Madrid", "902202122");
+        db.store(of);
+        System.out.println("Stored Oficina" + of);
+    }
+
+    public static void anyadirCuentaAFirstOficina(ObjectContainer db){
+        ObjectSet result = db
+                .queryByExample(new Oficina("1234-SAN", null, null));
+        Oficina found = (Oficina) result.next();
+	result = db
+                .queryByExample(new Corriente(null,"5678-1234-EFGH", 0, 0.0, null));
+        Corriente c1 = (Corriente) result.next();
+	found.addCorriente(c1);
+        db.store(found);
+        System.out.println("Añadido " + c1 + " a " + found);
+    }  
+
+    public static void retrieveCuentasFromOficina(ObjectContainer db) {
+        Oficina of = new Oficina("1234-SAN", null, null);
+        ObjectSet result = db.queryByExample(of);
+	of = (Oficina) result.next();
+	System.out.println("Cuentas de " + of);
+        listResult(of.getCorrientes());
     }
 
 }

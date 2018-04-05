@@ -12,4 +12,8 @@ public class Transferencia extends Operacion
 	public Cuenta getCuentaDestino(){ return this.cuentaDest; }
 	public void setCuentaDestino( Cuenta c ){ this.cuentaDest=c; }
 
+	public String toString() {
+        	return super.getCodigo()+" transferencia de " + super.getCuentaOrigen().toString() + " a " +cuentaDest.toString();
+    	}
+
 }

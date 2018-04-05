@@ -12,4 +12,8 @@ public class IngresoRetirada extends Operacion
 	public Oficina getOficina(){ return this.of; }
 	public void setOficina( Oficina of ){ this.of=of; }
 
+	public String toString() {
+        	return super.getCodigo()+" ingreso o retirada en " + of.toString();
+    	}
+
 }

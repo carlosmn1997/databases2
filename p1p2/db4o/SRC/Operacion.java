@@ -35,5 +35,7 @@ public class Operacion
 	public Cuenta getCuentaOrigen(){ return this.c; }
 	public void setCuentaOrigen( Cuenta c ){ this.c=c; }
 
-
+	public String toString() {
+        	return codigo;
+    	}
 }
