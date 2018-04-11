@@ -2,7 +2,7 @@ CREATE TABLE Peloton(
 	Identificador INTEGER NOT NULL,
 	nombre VARCHAR(100) NOT NULL,
 	clase VARCHAR(100) NOT NULL,
-	PRIMARY KEY (Identificador),
+	PRIMARY KEY (Identificador)
 );
 
 CREATE TABLE Ranger(

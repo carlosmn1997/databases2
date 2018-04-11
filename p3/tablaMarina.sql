@@ -1,0 +1,40 @@
+CREATE TABLE Escuadra(
+	id VARCHAR(30) NOT NULL,
+	Nombre VARCHAR(100) NOT NULL,
+	caracteristica VARCHAR(100) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE Marine(
+	id VARCHAR(30) NOT NULL,
+	Nombre VARCHAR(100) NOT NULL,
+	Aps VARCHAR(100) NOT NULL,
+	posicion VARCHAR(50) NOT NULL,
+	caracteristica VARCHAR(100) NOT NULL,
+	escuadra INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY escuadra REFERENCES Escuadra(id)
+);
+
+CREATE TABLE Vehiculo(
+	id VARCHAR(30) NOT NULL,
+	armas VARCHAR(100) NOT NULL,
+	fechaCreacion DATE NOT NULL,
+	escuadra INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY escuadra REFERENCES Escuadra(id)
+);
+
+CREATE TABLE VTierra(
+	id VARCHAR(30) NOT NULL,
+	traccion VARCHAR(100) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY id REFERENCES Vehiculo(id)
+);
+
+CREATE TABLE VAgua(
+	id VARCHAR(30) NOT NULL,
+	cargamax INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY id REFERENCES Vehiculo(id)
+);
