@@ -1,0 +1,69 @@
+select * from all_db_links
+select * from user_db_links
+select * from dba_db_links
+
+select table_name from user_tables@schema2bd2
+se puede cambiar por db_tables, dba_tables
+la columna importante es la de table_name
+
+el dblink se pone en la parte detrás de la tabla
+
+Para saber acerca de las tablas:
+
+describe			Para saber las restricciones:
+	user_constraints
+	user_cons_columns
+
+
+un usuario es un esquema
+
+en moodle: reverse engineering de Oracle es de utilidad
+
+en la primera parte no hay que crear ningún dblink
+
+para la parte dos la base de datos que queramos y tenemos que crear una base de datos central y vistas que unan los dos esquemas (que haya tipo de datos diferente, alguna especialización...)
+
+Para hacerlo en Postgre crear dos bases de datos una por cada lado, en vez de crear una tercera base, crear directamente las vistas:
+
+CREATE extension dblink
+
+hay postgres antiguos que no tienen dblink, hacerlo mejor en la máquina virtual
+
+en moodle sql to csv para que se vea bien formateado
+
+
+-- APUNTES MIOS --
+
+    select COLUMN_NAME, COMMENTS
+    from USER_COL_COMMENTS
+    where TABLE_NAME = '';
+
+
+select UCC.CONSTRAINT_NAME, UCC.COLUMN_NAME, UC.CONSTRAINT_TYPE, UC.SEARCH_CONDITION, UC2.TABLE_NAME as REFERENCES_TABLE
+from USER_CONS_COLUMNS UCC, USER_CONSTRAINTS UC, USER_CONSTRAINTS UC2
+where UCC.CONSTRAINT_NAME = UC.CONSTRAINT_NAME
+and UC.R_CONSTRAINT_NAME = UC2.CONSTRAINT_NAME(+)
+and UCC.TABLE_NAME = 'titular@schema2bd2'
+order by UCC.CONSTRAINT_NAME;
+
+
+select * from user_cons_columns where table_name = 'titular@schema2bd2';
+
+
+select * from user_cons_columns where table_name = 'cuentacorriente@schema2bd2';
+
+select * from user_constraints@schema2bd2;
+
+select * from user_cons_columns@schema2bd2;
+
+where table_name = 'titular@schema2bd2';
+
+select * from user_constraints;
+
+
+
+select UCC.CONSTRAINT_NAME, UCC.COLUMN_NAME, UC.CONSTRAINT_TYPE, UC.SEARCH_CONDITION, UC2.TABLE_NAME as REFERENCES_TABLE
+from USER_CONS_COLUMNS@schema2db2 UCC, USER_CONSTRAINTS@schema2db2 UC, USER_CONSTRAINTS@schema2db2 UC2
+where UCC.CONSTRAINT_NAME = UC.CONSTRAINT_NAME
+and UC.R_CONSTRAINT_NAME = UC2.CONSTRAINT_NAME(+)
+order by UCC.CONSTRAINT_NAME;
