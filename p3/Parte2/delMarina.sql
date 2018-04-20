@@ -1,0 +1,5 @@
+DROP TABLE Marine;
+DROP TABLE VTierra;
+DROP TABLE VAgua;
+DROP TABLE Vehiculo;
+DROP TABLE Escuadra;

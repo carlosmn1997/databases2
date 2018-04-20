@@ -1,5 +1,5 @@
 CREATE TABLE Escuadra(
-	id VARCHAR(30) NOT NULL,
+	id INTEGER NOT NULL,
 	Nombre VARCHAR(100) NOT NULL,
 	caracteristica VARCHAR(100) NOT NULL,
 	PRIMARY KEY (id)
@@ -13,7 +13,7 @@ CREATE TABLE Marine(
 	caracteristica VARCHAR(100) NOT NULL,
 	escuadra INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY escuadra REFERENCES Escuadra(id)
+	FOREIGN KEY(escuadra) REFERENCES Escuadra(id)
 );
 
 CREATE TABLE Vehiculo(
@@ -22,19 +22,19 @@ CREATE TABLE Vehiculo(
 	fechaCreacion DATE NOT NULL,
 	escuadra INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY escuadra REFERENCES Escuadra(id)
+	FOREIGN KEY (escuadra) REFERENCES Escuadra(id)
 );
 
 CREATE TABLE VTierra(
 	id VARCHAR(30) NOT NULL,
 	traccion VARCHAR(100) NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY id REFERENCES Vehiculo(id)
+	FOREIGN KEY (id) REFERENCES Vehiculo(id)
 );
 
 CREATE TABLE VAgua(
 	id VARCHAR(30) NOT NULL,
 	cargamax INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY id REFERENCES Vehiculo(id)
+	FOREIGN KEY (id) REFERENCES Vehiculo(id)
 );
