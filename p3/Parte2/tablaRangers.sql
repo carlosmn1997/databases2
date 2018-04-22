@@ -20,7 +20,6 @@ CREATE TABLE Vehiculo(
 	Matricula INTEGER NOT NULL,
 	armamento VARCHAR(100) NOT NULL,
 	fechaFabricacion DATE NOT NULL,
-	numPersonas INTEGER NOT NULL,
     tipo VARCHAR(100) NOT NULL,
     peloton INTEGER NOT NULL,
     traccion VARCHAR(100),
