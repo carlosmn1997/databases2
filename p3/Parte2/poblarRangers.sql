@@ -10,8 +10,8 @@ INSERT INTO Ranger VALUES ('94653','Jesus','Nazaret','Sargento Primero','Tirador
 INSERT INTO Ranger VALUES ('104575','Antonio','Ferrer','Sargento','Conductor','1005');
 
 
-INSERT INTO Vehiculo VALUES ('1234','Ametralladora Superior','2010-03-01','5','Tierra','1005','4 Ruedas',null);
-INSERT INTO Vehiculo VALUES ('1345','Lanzacohetes','2000-01-03','7','Tierra','1005','Delantera',null);
-INSERT INTO Vehiculo VALUES ('6479','Ametralladora Superior','2013-12-01','4','Tierra','1006','4 Ruedas',null);
-INSERT INTO Vehiculo VALUES ('1579','NO','2018-01-21','10','Agua','1005',null,'1000');
-INSERT INTO Vehiculo VALUES ('6741','Ametralladora','2012-05-30','100','Agua','1005',null,'3000');
+INSERT INTO Vehiculo VALUES ('1234','Ametralladora Superior','2010-03-01','Tierra','1005','4 Ruedas',null);
+INSERT INTO Vehiculo VALUES ('1345','Lanzacohetes','2000-01-03','Tierra','1005','Delantera',null);
+INSERT INTO Vehiculo VALUES ('6479','Ametralladora Superior','2013-12-01','Tierra','1006','4 Ruedas',null);
+INSERT INTO Vehiculo VALUES ('1579','NO','2018-01-21','Agua','1005',null,'1000');
+INSERT INTO Vehiculo VALUES ('6741','Ametralladora','2012-05-30','Agua','1005',null,'3000');

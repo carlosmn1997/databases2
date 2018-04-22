@@ -9,7 +9,7 @@ SELECT *
                 'select identificador, nombre, clase from Peloton')
     AS t2(identificador integer, nombre varchar(100), clase varchar(100));
 
-CREATE VIEW Persona AS
+CREATE VIEW Soldado AS
 SELECT *
     FROM dblink('dbname=Rangers',
               'select identificador, nombre, apellidos, rango, especialidad, peloton from Ranger')

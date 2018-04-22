@@ -1,0 +1,5 @@
+DROP VIEW Grupo;
+DROP VIEW Soldado;
+DROP VIEW VEHICUlo;
+DROP VIEW Terrestre;
+DROP VIEW Acuatico;
