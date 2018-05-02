@@ -1,0 +1,31 @@
+transient para que un atributo no se vuelque a la tabla
+
+public Class{
+	
+}
+
+HENDRIX para compilar el ANT
+EXPORT JAVA_HOME=/usr
+
+(convertir los ficheros a UTF-8)
+ant clean
+ant build
+ant (hace clean y build)
+ant run (para ejecutar)
+
+antlr -> ponerlo en la carpeta lib para que funcionen las consultas
+
+
+las directivas (@column...) se pueden poner en un fichero a parte en .xml:
+Cliente.xml
+<class-> Cliente -> tabla
+-> atrib: Nombre -> column
+-> atrib ....
+
+H_nombreTabla para trabajar ambas partes en paralelo
+
+
+codejava.net/frameworks/hibernate -> para las relaciones
+objectdb.com/java/jpa/query
+
+
