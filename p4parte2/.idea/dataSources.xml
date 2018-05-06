@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="@hendrix-oracle.cps.unizar.es" uuid="2d863e0f-1dea-4d1a-97be-99777a7b82b3">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@hendrix-oracle.cps.unizar.es:1521:vicious</jdbc-url>
+      <driver-properties>
+        <property name="v$session.program" value="DataGrip" />
+        <property name="oracle.jdbc.timezoneAsRegion" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="@hendrix-oracle.cps.unizar.es [2]" uuid="8c383991-f928-4abd-9b2e-ce091e69242c">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@hendrix-oracle.cps.unizar.es:1521:vicious</jdbc-url>
+      <driver-properties>
+        <property name="v$session.program" value="DataGrip" />
+        <property name="oracle.jdbc.timezoneAsRegion" value="false" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>
