@@ -31,6 +31,9 @@ public class Oficina {
 	@OneToMany(mappedBy = "oficina")
 	private Set<Corriente> corrientes = new HashSet<Corriente>();
 
+	@OneToMany(mappedBy = "oficina")
+	private Set<IngresoRetirada> ingresoRetirada = new HashSet<IngresoRetirada>();
+	
 	public int getCodigo() {
 		return codigo;
 	}

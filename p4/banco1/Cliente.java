@@ -1,5 +1,6 @@
 package banco1;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,8 +25,8 @@ public class Cliente {
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@Column(name = "EDAD")
-	private int edad;
+	@Column(name = "FECHANAC")
+	private Date fechaNac;
 	
 	@Column(name = "APELLIDOS")
 	private String apellidos;
@@ -53,14 +54,6 @@ public class Cliente {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public int getEdad() {
-		return edad;
-	}
-
-	public void setEdad(int edad) {
-		this.edad = edad;
 	}
 
 	public String getApellidos() {
@@ -93,6 +86,14 @@ public class Cliente {
 
 	public void setCuentas(Set<Cuenta> cuentas) {
 		this.cuentas = cuentas;
+	}
+
+	public Date getFechaNac() {
+		return fechaNac;
+	}
+
+	public void setFechaNac(Date fechaNac) {
+		this.fechaNac = fechaNac;
 	}
 	
 

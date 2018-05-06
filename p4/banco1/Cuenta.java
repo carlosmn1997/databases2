@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import uni.Asignatura;
+
 @Entity(name="H_CUENTA")
 public class Cuenta {
 	@Id
@@ -34,6 +36,14 @@ public class Cuenta {
 	@ManyToMany(mappedBy = "cuentas")
 	private Set<Cliente> clientes = new HashSet<Cliente>();
 
+	// Si se elimina una cuenta se eliminan sus operaciones asociadas
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="cuentaOrigen")
+	private Set<Operacion> operaciones = new HashSet<Operacion>();
+	
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="cuenta")
+	private Set<Transferencia> transferencia = new HashSet<Transferencia>();
+	
+	
 	public String getIBAN() {
 		return IBAN;
 	}
@@ -72,6 +82,19 @@ public class Cuenta {
 
 	public void setClientes(Set<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+	
+	public void addCliente(Cliente c) {
+		clientes.add(c);
+	}
+	
+	
+	public int totalClientes() {
+		return clientes.size();
+	}
+	
+	public void removeCliente(Cliente c) {
+		clientes.remove(c);
 	}
 		
 

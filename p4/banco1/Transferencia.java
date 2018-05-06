@@ -13,56 +13,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="H_TRANSFERENCIA")
 public class Transferencia extends Operacion {
-	@Id
-	@Column(name = "IBAN")
-	private String IBAN;
 	
-	@Column(name = "SALDO")
-	private int saldo;
-	
-	@Column(name = "FECHA_CREACION")
-	private Date fecha_creacion;
-	
-	@Column(name = "CCC") // Numero cuenta
-	private int ccc;
+	@ManyToOne
+	private Cuenta cuenta;
 
-	public String getIBAN() {
-		return IBAN;
+	public Cuenta getCuenta() {
+		return cuenta;
 	}
 
-	public void setIBAN(String iBAN) {
-		IBAN = iBAN;
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
 	}
-
-	public int getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(int saldo) {
-		this.saldo = saldo;
-	}
-
-	public Date getFecha_creacion() {
-		return fecha_creacion;
-	}
-
-	public void setFecha_creacion(Date fecha_creacion) {
-		this.fecha_creacion = fecha_creacion;
-	}
-
-	public int getCcc() {
-		return ccc;
-	}
-
-	public void setCcc(int ccc) {
-		this.ccc = ccc;
-	}
-	
-		
-
 }

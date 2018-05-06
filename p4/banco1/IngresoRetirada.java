@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="H_INGRESORETIRADA")
-public class IngresoRetirada {
+public class IngresoRetirada extends Operacion {
 	
 	@ManyToOne
 	private Oficina oficina;

@@ -30,6 +30,4 @@ public class Ahorro extends Cuenta{
 		this.interes = interes;
 	}
 
-		
-
 }

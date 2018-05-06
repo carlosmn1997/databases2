@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity(name="H_OPERACION")
 public class Operacion {
@@ -25,11 +26,13 @@ public class Operacion {
 	@Id
 	@Column(name = "CODIGO")
 	private int codigo;
-	
-	@MapsId
+
+	//@Id
 	@ManyToOne
-	@JoinColumn(name = "IBAN")
-	private String iban;
+	//@JoinColumn(name = "IBAN")
+	// https://stackoverflow.com/questions/27305950/jpa-foreign-key-that-is-also-a-primary-key-mapping
+	@PrimaryKeyJoinColumn(name="CUENTAORIGEN", referencedColumnName="IBAN")
+	private Cuenta cuentaOrigen;
 	
 	@Column(name = "FECHA")
 	private Date fecha;
@@ -49,14 +52,6 @@ public class Operacion {
 
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
-	}
-
-	public String getIban() {
-		return iban;
-	}
-
-	public void setIban(String iban) {
-		this.iban = iban;
 	}
 
 	public Date getFecha() {
@@ -90,6 +85,17 @@ public class Operacion {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	public Cuenta getCuentaOrigen() {
+		return cuentaOrigen;
+	}
+
+	public void setCuentaOrigen(Cuenta cuentaOrigen) {
+		this.cuentaOrigen = cuentaOrigen;
+	}
+
+
+
 		
 
 }
