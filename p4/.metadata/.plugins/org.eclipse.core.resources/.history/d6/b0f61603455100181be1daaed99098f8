@@ -1,0 +1,141 @@
+package banco1;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+
+public class Test3 {
+	EntityManagerFactory entityManagerFactory = 
+			Persistence.createEntityManagerFactory("UnidadPersistenciaAlumnos");
+	EntityManager em = entityManagerFactory.createEntityManager();
+	
+	public void prueba() {
+	
+		Cliente c1 = new Cliente();
+		c1.setNombre("Carlos");
+		c1.setApellidos("Marañes Palotes");
+		c1.setDNI("123456789A");
+		
+		String lastCrawlDate = "2018-05-12";
+		java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(lastCrawlDate);
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		
+		c1.setFechaNac(sqlDate);
+		c1.setDireccion("c/estercolero,Muel,Espanya");
+		
+		Cliente c2 = new Cliente();
+		c2.setNombre("Nicolas");
+		c2.setApellidos("Lera MC");
+		c2.setDNI("987654321B");
+		
+		lastCrawlDate = "2018-03-12";
+		utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(lastCrawlDate);
+		sqlDate = new java.sql.Date(utilDate.getTime());
+
+		c2.setFechaNac(sqlDate);
+		c2.setDireccion("c/guay,Jaca,Espanya");
+		
+		EntityTransaction trans = em.getTransaction();
+		trans.begin();
+		try {
+			em.persist(c1);
+			em.persist(c2);
+			trans.commit();
+		} catch (PersistenceException e) {
+			if (trans.isActive()) {
+				trans.rollback();
+			}
+		}
+
+		Oficina of = new Oficina();
+		of.setCodigo(1);
+		of.setTelefono(192837465);
+		of.setDireccion("C/mayor, Zgz");
+	
+		trans.begin();
+		try {
+			em.persist(of);
+			trans.commit();
+		} catch (PersistenceException e) {
+			if (trans.isActive()) {
+				trans.rollback();
+			}
+		}
+		
+		//Primera cuenta
+		Ahorro cu1 = new Ahorro();
+		cu1.setIBAN("45ES 123456789");
+		cu1.setSaldo(100000000);
+		
+		
+		lastCrawlDate = "2034-12-12";
+		utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(lastCrawlDate);
+		sqlDate = new java.sql.Date(utilDate.getTime());
+		
+		cu1.setFecha_creacion(sqlDate);
+		cu1.setCcc(123456789);
+		cu1.setInteres(0.05);
+		cu1.addCliente(c2);
+		
+		//Segunda cuenta
+		Corriente cu2 = new Corriente();
+		cu1.setIBAN("45ES 987654321");
+		cu1.setSaldo(-5);
+		
+		lastCrawlDate = "2034-11-12";
+		utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(lastCrawlDate);
+		sqlDate = new java.sql.Date(utilDate.getTime());
+		
+		cu1.fecha_creacion(sqlDate);
+		cu1.setCcc = 987654321;
+		clientes.add(c1);
+		
+		trans.begin();
+		try {
+			em.persist(cu1);
+			em.persist(cu2);
+			em.flush();
+			trans.commit();
+		} catch (PersistenceException e) {
+			if (trans.isActive()) {
+				trans.rollback();
+			}
+		}
+		
+		Operacion op = new Operacion();
+		op.setFecha = 12/05/2035;
+		op.setHora  = "12:12:12";
+		op.setDescripcion = "MUY CHULA";
+
+		Operacion op = new Operacion();
+		op.setFecha = 15/07/2035;
+		op.setHora  = "14:12:12";
+		op.setDescripcion = "ERRRRRRRONEA";
+		
+		EntityTransaction trans1 = em.getTransaction();
+		trans1.begin();
+		try{
+			em.persist(e1);
+			em.persist(e2);
+			trans1.commit();
+		} catch (PersistenceException e) {
+			if (trans.isActive()) {
+				trans1.rollback();
+			}
+		}
+		
+
+	}
+	
+	public static void main(String[] args) {
+		Test3 t = new Test3();
+		t.prueba();
+	}
+	
+
+}
