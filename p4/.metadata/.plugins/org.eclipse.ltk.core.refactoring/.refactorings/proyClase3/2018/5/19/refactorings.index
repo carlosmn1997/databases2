@@ -3,3 +3,28 @@
 1525688393717	Delete elements
 1525689059842	Rename type 'OficinaEntity'
 1525689282105	Rename type 'Oficina'
+1525766401934	Encapsulate field 'clientes'
+1525767506038	Delete elements
+1525767748694	Delete elements
+1525766258620	Encapsulate field 'cuentas'
+1525768679524	Delete elements
+1525768721192	Delete elements
+1525769397709	Rename type 'OficinaEntity'
+1525769468403	Delete elements
+1525769479685	Delete element
+1525769597209	Delete elements
+1525769601376	Delete elements
+1525769664658	Delete element
+1525770340899	Delete element
+1525770404410	Delete element
+1525771765750	Delete element
+1525791850613	Delete element
+1525791940792	Delete element
+1525792468190	Delete elements
+1525792471503	Delete elements
+1525792495778	Delete elements
+1525792821975	Delete element
+1525792919701	Delete elements
+1525793483817	Rename type 'ClienteEntity'
+1525793494175	Rename type 'CuentaEntity'
+1525793498676	Rename type 'OficinaEntity'
