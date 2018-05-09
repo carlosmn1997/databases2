@@ -3,7 +3,12 @@ package banco1;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+
+import javassist.bytecode.Descriptor.Iterator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,7 +31,7 @@ public class Test3 {
 		c1.setApellidos("Marañes Palotes");
 		c1.setDNI("123456789A");
 		
-		String lastCrawlDate = "2018-05-12";
+		String lastCrawlDate = "1997-04-30";
 		java.util.Date utilDate = null;
 		try {
 			utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(lastCrawlDate);
@@ -44,7 +49,7 @@ public class Test3 {
 		c2.setApellidos("Lera MC");
 		c2.setDNI("987654321B");
 		
-		lastCrawlDate = "2018-03-12";
+		lastCrawlDate = "1997-10-04";
 		try {
 			utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(lastCrawlDate);
 		} catch (ParseException e2) {
@@ -180,23 +185,61 @@ public class Test3 {
 				trans1.rollback();
 			}
 		}
+		System.out.println("\nCONSULTAS\n---------------- \n");
+		/*String q0 = "select c FROM H_CLIENTE c where "
+				+ "LENGTH(c.nombre)<7 order by c.nombre";
+		Query query0 = em.createQuery(q0);
+		List<Cliente> res0 = query0.getResultList();
+		Cliente c=res0.get(0);
+		System.out.println(Integer.toString(res0.size())+c.getNombre()+c.getApellidos());
+		String q01 = "select cc from H_CUENTA cc join cc.clientes "
+				+ "c where c.nombre = \'Carlos\'";
+		Query query01 = em.createQuery(q01);
+		List<Cuenta> res01 = query01.getResultList();
+		System.out.println(Integer.toString(res01.size()));
+		Cuenta cc=res01.get(0);
+		String q02 = "select co FROM H_CORRIENTE co wher co.IBAN = "+ cc.getIBAN();
+		Query query02 = em.createQuery(q02);
+		List<Corriente> res02 = query02.getResultList();
+		String cabecera = "Consulta1:\nClientes con cuenta corriente";
+		cabecera += "con nombre de menos de 7 letras\n";
+		System.out.println(cabecera);
+		for(Corriente co : res02){
+			System.out.println(co.getOficina().getDireccion());
+		}*/
 		
-		String q15 = "select p.descripcion from H_OPERACION p";
-		Query query15 = em.createQuery(q15);
-		List<String> res15 = query15.getResultList();
-		System.out.println(res15);
+		String q1 = "select o from H_CORRIENTE o "
+				+ "where o.saldo<0";
+		Query query1 = em.createQuery(q1);
+		List<Corriente> res1 = query1.getResultList();
+		System.out.println("Consulta 2:\n" + q1);
+		for(Corriente of1 : res1){
+			System.out.println(of1.getIBAN()+" - ");
+		}
 		
+		String q2 = "select p.descripcion from H_OPERACION p";
+		Query query2 = em.createQuery(q2);
+		List<String> res2 = query2.getResultList();
+		System.out.println("Consulta 3:\n" + q2);
+		System.out.println(res2);
 		
-		q15 = "select p.descripcion from H_CUENTA";
-		query15 = em.createQuery(q15);
-		res15 = query15.getResultList();
-		System.out.println(res15);
-	
+		String q3 = "select p.descripcion from H_OPERACION p";
+		Query query3 = em.createQuery(q3);
+		List<String> res3 = query3.getResultList();
+		System.out.println("Consulta 4:\n" + q3);
+		System.out.println(res3);
+		
+		String q4 = "select p.descripcion from H_OPERACION p";
+		Query query4 = em.createQuery(q4);
+		List<String> res4 = query4.getResultList();
+		System.out.println("Consulta 5:\n" + q4);
+		System.out.println(res4);
 	}
 	
 	public static void main(String[] args) {
 		Test3 t = new Test3();
 		t.prueba();
+		System.out.println("FIN PRUEBAS");
 	}
 	
 
