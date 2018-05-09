@@ -5,8 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javassist.bytecode.Descriptor.Iterator;
 
@@ -125,6 +127,10 @@ public class Test3 {
 		cu2.setFecha_creacion(sqlDate);
 		cu2.setCcc(987654321);
 		cu2.addCliente(c1);
+		cu2.setOficina(of);
+		Set<Corriente> c = new HashSet<Corriente>();
+		c.add(cu2);
+		of.setCorrientes(c);
 		
 		trans.begin();
 		try {
@@ -139,7 +145,7 @@ public class Test3 {
 			}
 		}
 		
-		Operacion op = new Operacion();
+		Transferencia op = new Transferencia();
 		op.setCuentaOrigen(cu1);
 		op.setCodigo(1);
 		
@@ -155,10 +161,12 @@ public class Test3 {
 		op.setFecha(sqlDate);
 		op.setHora("12:12:12");
 		op.setDescripcion("MUY CHULA");
+		op.setCuenta(cu2);
+		op.setCantidad(2000000.0);
 
-		Operacion op2 = new Operacion();
-		op.setCuentaOrigen(cu2);
-		op.setCodigo(1);
+		Ingreso op2 = new Ingreso();
+		op2.setCuentaOrigen(cu2);
+		op2.setCodigo(2);
 		
 		lastCrawlDate = "2035-05-15";
 		try {
@@ -172,6 +180,8 @@ public class Test3 {
 		op2.setFecha(sqlDate);
 		op2.setHora("14:12:12");
 		op2.setDescripcion("ERRRRRRRONEA");
+		op2.setCantidad(20.0);
+		op2.setOficina(of);
 		
 		EntityTransaction trans1 = em.getTransaction();
 		trans1.begin();
@@ -212,23 +222,30 @@ public class Test3 {
 				+ "where o.saldo<0";
 		Query query1 = em.createQuery(q1);
 		List<Corriente> res1 = query1.getResultList();
-		System.out.println("Consulta 2:\n" + q1);
+		System.out.println("\nConsulta 1:\n\n" + q1 +"\n");
 		for(Corriente of1 : res1){
-			System.out.println(of1.getIBAN()+" - ");
+			System.out.println(of1.getIBAN()+" - "+of1.getOficina().getDireccion()+"\n");
 		}
 		
-		String q2 = "select p.descripcion from H_OPERACION p";
-		Query query2 = em.createQuery(q2);
-		List<String> res2 = query2.getResultList();
-		System.out.println("Consulta 3:\n" + q2);
-		System.out.println(res2);
-		
-		String q3 = "select p.descripcion from H_OPERACION p";
+		Query q2 = em.createNativeQuery("SELECT * FROM H_CUENTA"
+				+ " where saldo in (select max(saldo) from H_Cuenta)", Cuenta.class);
+		List<Cuenta> res2 = q2.getResultList();
+		System.out.println("\nConsulta 2:\n");
+		for(Cuenta cc: res2){
+			Query q3 = em.createNativeQuery("SELECT * FROM H_OPERACION"
+					+ " where cuentaOrigen_IBAN=\'"+cc.getIBAN()+"\'", Transferencia.class);
+			List<Transferencia> res3 = q3.getResultList();
+			for(Transferencia t: res3){
+				System.out.println("\nTransferencia con code "+t.getCodigo()+" de "
+						+t.getCuentaOrigen().getIBAN()+" a "+t.getCuenta().getIBAN()+"\n");
+			}
+		}
+		/*String q3 = "select p.descripcion from H_OPERACION p";
 		Query query3 = em.createQuery(q3);
 		List<String> res3 = query3.getResultList();
 		System.out.println("Consulta 4:\n" + q3);
 		System.out.println(res3);
-		
+		*/
 		String q4 = "select p.descripcion from H_OPERACION p";
 		Query query4 = em.createQuery(q4);
 		List<String> res4 = query4.getResultList();
