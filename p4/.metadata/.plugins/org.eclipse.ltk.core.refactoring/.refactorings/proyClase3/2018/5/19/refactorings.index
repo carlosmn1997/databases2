@@ -28,3 +28,12 @@
 1525793483817	Rename type 'ClienteEntity'
 1525793494175	Rename type 'CuentaEntity'
 1525793498676	Rename type 'OficinaEntity'
+1525849866166	Delete element
+1525850044821	Rename type 'OficinaEntity'
+1525850064858	Rename type 'CuentaEntity'
+1525850636380	Delete elements
+1525850647958	Rename type 'ClienteEntity'
+1525850717954	Delete elements
+1525851183911	Rename type 'OperacionEntity'
+1525851189326	Rename type 'OperacionEntityPK'
+1525851527704	Delete element

@@ -1,0 +1,72 @@
+//package banco2;
+//
+//import javax.persistence.*;
+//
+//import java.util.HashSet;
+//import java.util.Objects;
+//import java.util.Set;
+//
+//@Entity
+//@Table(name = "OFICINA")
+//public class Oficina {
+//    private String codigo;
+//    private String direccion;
+//    private String telefono;
+//    
+//	@OneToMany(mappedBy = "oficina")
+//	private Set<Corriente> corrientes = new HashSet<Corriente>();
+//
+//    @Id
+//    @Column(name = "CODIGO")
+//    public String getCodigo() {
+//        return codigo;
+//    }
+//
+//    public void setCodigo(String codigo) {
+//        this.codigo = codigo;
+//    }
+//
+//    @Basic
+//    @Column(name = "DIRECCION")
+//    public String getDireccion() {
+//        return direccion;
+//    }
+//
+//    public void setDireccion(String direccion) {
+//        this.direccion = direccion;
+//    }
+//
+//    @Basic
+//    @Column(name = "TELEFONO")
+//    public String getTelefono() {
+//        return telefono;
+//    }
+//
+//    public void setTelefono(String telefono) {
+//        this.telefono = telefono;
+//    }
+//
+////    @Override
+////    public boolean equals(Object o) {
+////        if (this == o) return true;
+////        if (o == null || getClass() != o.getClass()) return false;
+////        Oficina that = (Oficina) o;
+////        return Objects.equals(codigo, that.codigo) &&
+////                Objects.equals(direccion, that.direccion) &&
+////                Objects.equals(telefono, that.telefono);
+////    }
+////
+////    @Override
+////    public int hashCode() {
+////
+////        return Objects.hash(codigo, direccion, telefono);
+////    }
+//
+//	public Set<Corriente> getCorrientes() {
+//		return corrientes;
+//	}
+//
+//	public void setCorrientes(Set<Corriente> corrientes) {
+//		this.corrientes = corrientes;
+//	}
+//}
