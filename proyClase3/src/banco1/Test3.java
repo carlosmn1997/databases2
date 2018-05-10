@@ -109,6 +109,9 @@ public class Test3 {
 		cu1.setCcc(123456789);
 		cu1.setInteres(0.05);
 		cu1.addCliente(c2);
+		Set<Cuenta> ahorros = new HashSet<Cuenta>();
+		ahorros.add(cu1);
+		c2.setCuentas(ahorros);
 		
 		//Segunda cuenta
 		Corriente cu2 = new Corriente();
@@ -127,6 +130,9 @@ public class Test3 {
 		cu2.setFecha_creacion(sqlDate);
 		cu2.setCcc(987654321);
 		cu2.addCliente(c1);
+		Set<Cuenta> corrientes = new HashSet<Cuenta>();
+		corrientes.add(cu2);
+		c1.setCuentas(corrientes);
 		cu2.setOficina(of);
 		Set<Corriente> c = new HashSet<Corriente>();
 		c.add(cu2);
@@ -196,28 +202,34 @@ public class Test3 {
 			}
 		}
 		System.out.println("\nCONSULTAS\n---------------- \n");
-		/*String q0 = "select c FROM H_CLIENTE c where "
+		
+		//CONSULTA 0
+		String q0 = "select c FROM H_CLIENTE c where "
 				+ "LENGTH(c.nombre)<7 order by c.nombre";
 		Query query0 = em.createQuery(q0);
 		List<Cliente> res0 = query0.getResultList();
-		Cliente c=res0.get(0);
-		System.out.println(Integer.toString(res0.size())+c.getNombre()+c.getApellidos());
+		Cliente c0=res0.get(0);
+		System.out.println(Integer.toString(res0.size())+c0.getNombre()+c0.getApellidos());
 		String q01 = "select cc from H_CUENTA cc join cc.clientes "
-				+ "c where c.nombre = \'Carlos\'";
+				+ "c where c.nombre = :nom";
 		Query query01 = em.createQuery(q01);
+		query01.setParameter("nom", c0.getNombre());
 		List<Cuenta> res01 = query01.getResultList();
 		System.out.println(Integer.toString(res01.size()));
-		Cuenta cc=res01.get(0);
-		String q02 = "select co FROM H_CORRIENTE co wher co.IBAN = "+ cc.getIBAN();
+		Cuenta cc0=res01.get(0);
+		String q02 = "select co FROM H_CORRIENTE co where co.IBAN = :ib";
 		Query query02 = em.createQuery(q02);
+		query02.setParameter("ib", cc0.getIBAN());
 		List<Corriente> res02 = query02.getResultList();
 		String cabecera = "Consulta1:\nClientes con cuenta corriente";
 		cabecera += "con nombre de menos de 7 letras\n";
 		System.out.println(cabecera);
 		for(Corriente co : res02){
 			System.out.println(co.getOficina().getDireccion());
-		}*/
+		}
 		
+		
+		//CONSULTA 2
 		String q1 = "select o from H_CORRIENTE o "
 				+ "where o.saldo<0";
 		Query query1 = em.createQuery(q1);
@@ -227,6 +239,8 @@ public class Test3 {
 			System.out.println(of1.getIBAN()+" - "+of1.getOficina().getDireccion()+"\n");
 		}
 		
+		
+		//CONSULTA 3
 		Query q2 = em.createNativeQuery("SELECT * FROM H_CUENTA"
 				+ " where saldo in (select max(saldo) from H_Cuenta)", Cuenta.class);
 		List<Cuenta> res2 = q2.getResultList();
@@ -240,17 +254,6 @@ public class Test3 {
 						+t.getCuentaOrigen().getIBAN()+" a "+t.getCuenta().getIBAN()+"\n");
 			}
 		}
-		/*String q3 = "select p.descripcion from H_OPERACION p";
-		Query query3 = em.createQuery(q3);
-		List<String> res3 = query3.getResultList();
-		System.out.println("Consulta 4:\n" + q3);
-		System.out.println(res3);
-		*/
-		String q4 = "select p.descripcion from H_OPERACION p";
-		Query query4 = em.createQuery(q4);
-		List<String> res4 = query4.getResultList();
-		System.out.println("Consulta 5:\n" + q4);
-		System.out.println(res4);
 	}
 	
 	public static void main(String[] args) {
