@@ -1,0 +1,100 @@
+package banco2;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
+public class test {
+	EntityManagerFactory entityManagerFactory = 
+			Persistence.createEntityManagerFactory("UnidadPersistenciaAlumnos");
+	EntityManager em = entityManagerFactory.createEntityManager();
+	
+	public void prueba() {
+		String q15 = "select p.codigo from Oficina p";
+		Query query15 = em.createQuery(q15);
+		List<String> res15 = query15.getResultList();
+		System.out.println(res15);
+		
+//		q15 = "select p.descripcion from Ingreso p";
+//		query15 = em.createQuery(q15);
+//		res15 = query15.getResultList();
+//		System.out.println(res15);
+//		
+//		q15 = "select p.iban from Corriente p";
+//		query15 = em.createQuery(q15);
+//		res15 = query15.getResultList();
+//		System.out.println(res15);
+		
+		
+		//CONSULTA 0
+				String q0 = "select c FROM Cliente c where "
+						+ "LENGTH(c.nombre)<7 order by c.nombre";
+				Query query0 = em.createQuery(q0);
+				List<Cliente> res0 = query0.getResultList();
+				Cliente c0=res0.get(0);
+				System.out.println(Integer.toString(res0.size())+c0.getNombre()+c0.getApellido());
+				String q01 = "select cc from Cuenta cc join cc.clientes "
+						+ "c where c.nombre = :nom";
+				Query query01 = em.createQuery(q01);
+				query01.setParameter("nom", c0.getNombre());
+				List<Cuenta> res01 = query01.getResultList();
+				System.out.println(Integer.toString(res01.size()));
+				Cuenta cc0=res01.get(0);
+				String q02 = "select co FROM Corriente co where co.iban = :ib";
+				Query query02 = em.createQuery(q02);
+				query02.setParameter("ib", cc0.getIban());
+				List<Corriente> res02 = query02.getResultList();
+				String cabecera = "Consulta1:\nClientes con cuenta corriente";
+				cabecera += "con nombre de menos de 7 letras\n";
+				System.out.println(cabecera);
+				for(Corriente co : res02){
+					System.out.println(co.getOficinaByOficina().getDireccion());
+				}
+				
+				
+				//CONSULTA 2
+				String q1 = "select o from Corriente o "
+						+ "where o.saldo<0";
+				Query query1 = em.createQuery(q1);
+				List<Corriente> res1 = query1.getResultList();
+				System.out.println("\nConsulta 1:\n\n" + q1 +"\n");
+				for(Corriente of1 : res1){
+					System.out.println(of1.getIban()+" - "+of1.getOficinaByOficina().getDireccion()+"\n");
+				}
+				
+				
+				//CONSULTA 3
+				Query q2 = em.createNativeQuery("SELECT * FROM Cuenta"
+						+ " where saldo in (select max(saldo) from Cuenta)", Cuenta.class);
+				List<Cuenta> res2 = q2.getResultList();
+				System.out.println("\nConsulta 2:\n");
+				for(Cuenta cc: res2){
+					Query q3 = em.createNativeQuery("SELECT * FROM Operacion"
+							+ " where ibanorigen=\'"+cc.getIban()+"\'", Transferencia.class);
+					List<Transferencia> res3 = q3.getResultList();
+					for(Transferencia t: res3){
+						System.out.println("\nTransferencia con code "+t.getCodigo()+" de "
+								+t.getCuentaByIbanorigen().getIban()+" a "+t.getCuentaByIbandestino().getIban()+"\n");
+					}
+				}
+		
+	}
+	
+	public static void main(String[] args) {
+		test t = new test();
+		t.prueba();
+	}
+	
+
+}
