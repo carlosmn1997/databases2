@@ -16,8 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import uni.Asignatura;
-
 @Entity(name="H_CUENTA")
 public class Cuenta {
 	@Id
