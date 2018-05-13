@@ -19,8 +19,6 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import uni.Persona;
-
 public class Test3 {
 	EntityManagerFactory entityManagerFactory = 
 			Persistence.createEntityManagerFactory("UnidadPersistenciaAlumnos");

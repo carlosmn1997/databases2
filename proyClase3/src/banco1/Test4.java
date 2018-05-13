@@ -11,6 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.*;
@@ -148,6 +149,7 @@ public class Test4 {
 		Operacion op2 = new Operacion();
 		op.setCuentaOrigen(cu2);
 		op.setCodigo(1);
+		op.setCantidad(100);
 		
 		lastCrawlDate = "2035-05-15";
 		try {
@@ -198,7 +200,7 @@ public class Test4 {
 //		System.out.println(allitems.get(0).getCodigo());
 		
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+//		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 
 //		  CriteriaQuery<Operacion> q = cb.createQuery(Operacion.class);
@@ -206,26 +208,81 @@ public class Test4 {
 //		//  ParameterExpression<Integer> p = cb.parameter(Integer.class);
 //		  q.select(c).where(cb.gt(c.<Integer>get("population"), 100));
 //		
+//		CriteriaQuery<Operacion> query = cb.createQuery(Operacion.class);
 //	   Root<Cuenta> cuenta = query.from(Cuenta.class);
 //		Join<Operacion, Cuenta> operacion = cuenta.join("operaciones");
 //		Subquery<Operacion> subquery = query.subquery(Operacion.class);
 //		Root<Operacion> subOperacion = query.from(Operacion.class);
-//		Predicate p = cb.gt(subOperacion.get("cantidad"),100);
+//		Predicate p = cb.gt(subOperacion.<Integer>get("cantidad"),100);
 //		subquery.where(p);
 //		query.where(cb.exists(subquery));
-	
-		CriteriaQuery<Cuenta> cq = cb.createQuery(Cuenta.class);
-		Root<Cliente> from = cq.from(Cliente.class);
-		Path<Object> path_a_apellidos_de_cliente = from.get("apellidos");
-		CriteriaQuery<Cliente> select = cq.select(from);
+//		
+//		List<Operacion> results = query.getResultType();
 		
-		Subquery<ApellidoCliente> subconsulta = cq.subquery(entidades.ApellidoCliente.class);
-		Root fromApellido = subconsulta.from(entidades.ApellidoCliente.class);
-		subconsulta.select(fromApellido.get("apellido"));
-		select.where(cb.in(path_a_apellidos_de_cliente).value(subconsulta));
-		TypedQuery<Cliente> q = em.createQuery(select);
-		List<Cliente> results = q.getResultList()
 		
+		
+		//Siempre igual
+		CriteriaBuilder cb = em.getCriteriaBuilder(); //Paso 1
+		CriteriaQuery<Operacion> cqry = cb.createQuery(Operacion.class); //Paso 1
+////
+////		
+//		Root<Operacion> root = cqry.from(Operacion.class); //Paso 2
+////
+//		//cqry.select(root); //Paso 3
+//		//Predicate pGtAge = cb.gt(root.<Integer>get("cantidad"),10); //Paso 4
+//		Predicate min = cb.gt(root.<Integer>get("cantidad"),10); //Paso 4
+//		Predicate max = cb.lt(root.<Integer>get("cantidad"),200);
+//		cqry.where(cb.and(min,max)); //Paso 5
+//		
+//     	Query qry = em.createQuery(cqry); //Paso 6
+//		List<Operacion> results = qry.getResultList(); //Paso 6
+//		for (Operacion o : results) {
+//			String IBAN = o.getCuentaOrigen().getIBAN();
+//			System.out.println("IBAN: "+IBAN);
+//		}
+		
+		
+		// Clientes ricos
+		
+//		CriteriaQuery<Cliente> cq = cb.createQuery(Cliente.class);
+//		Root<Cliente> from = cq.from(Cliente.class);
+//		Path<Object> path_cuentas_de_clientes = from.get("cuentas");
+//		CriteriaQuery<Cliente> select = cq.select(from);
+//		Subquery<Cuenta> subconsulta = cq.subquery(Cuenta.class);
+//		Root fromCuentas = subconsulta.from(Cuenta.class);
+//		subconsulta.select(fromCuentas.get("saldo"));
+//		subconsulta.where(cb.gt(fromCuentas.<Integer>get("saldo"), 1000));
+//		select.where(cb.in(path_cuentas_de_clientes).value(subconsulta));
+//		TypedQuery<Cliente> q = em.createQuery(select);
+//		List<Cliente> results = q.getResultList();
+//	
+		
+		// Find all manager that only manage below-average employees.
+//		CriteriaQuery criteriaQuery = cb.createQuery();
+//		Root cliente = criteriaQuery.from(Cliente.class);
+//		Subquery subQuery = criteriaQuery.subquery(Cliente.class);
+//		Root ahorro = subQuery.from(Ahorro.class);
+//		subQuery.where(cb.and(ahorro.get("oficina").g.equal(e));
+//		criteriaQuery.where(criteriaBuilder.exists(sq).not());
+//		Query query = entityManager.createQuery(criteriaQuery)
+//		List<Employee> = query.getResultList();
+//	
+//	
+//		CriteriaQuery<Operacion> cqry = cb.createQuery(Operacion.class); //Paso 1
+//		Root<Oficina> root = cqry.from(Oficina.class); //Paso 2
+//		Join<Oficina,IngresoRetirada> join =
+//		root.join(MyEntity_.anotherEntity); //Paso 2
+//		//Join<MyEntity,AnotherEntity> join =
+//		// root.join("anotherEntity"); //Paso 2
+//
+//		cqry.select(root); //Paso 3
+//		Predicate pGtAge = cb.gt(root.get(MyEntity_.age),10); //Paso 4
+//		Predicate pGtDateCreated=
+//		cb.greaterThan(root.get(MyEntity_.dateCreated),date); //paso 4
+//		Predicate pEqEnabled = cb.equals(join.get(AnotherEntity_.enabled),false);
+//		Predicate pAnd = cb.and(pGtDateCreated,pGtAge,pEqEnabled); //Paso 4
+//
+//		cqry.where(pAnd); //Paso 5
 	}
 	
 	public static void main(String[] args) {

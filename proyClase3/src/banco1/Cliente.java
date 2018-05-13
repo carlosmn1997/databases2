@@ -96,5 +96,9 @@ public class Cliente {
 		this.fechaNac = fechaNac;
 	}
 	
+	public void addCuenta(Cuenta c) {
+		cuentas.add(c);
+	}
+	
 
 }
