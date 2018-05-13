@@ -278,12 +278,15 @@ public class Test3 {
 		System.out.println("\nCONSULTAS\n---------------- \n");
 		
 		//CONSULTA 0
+		String cabecera = "Consulta1:\n Alguna oficina donde tenga domiciliada"
+				+ "una cuenta corriente el primer\n cliente alfabeticamente cuyo"
+				+ "nombre tiene menos de 7 letras\n";
+		System.out.println(cabecera);
 		String q0 = "select c FROM H_CLIENTE c where "
 				+ "LENGTH(c.nombre)<7 order by c.nombre";
 		Query query0 = em.createQuery(q0);
 		List<Cliente> res0 = query0.getResultList();
 		Cliente c0=res0.get(0);
-		System.out.println(Integer.toString(res0.size())+c0.getNombre()+c0.getApellidos());
 		String q01 = "select cc from H_CUENTA cc join cc.clientes "
 				+ "c where c.nombre = :nom";
 		Query query01 = em.createQuery(q01);
@@ -296,18 +299,13 @@ public class Test3 {
 		System.out.println(cc0.getIBAN());
 		query02.setParameter("ib", cc0.getIBAN());
 		List<Corriente> res02 = query02.getResultList();
-		System.out.println(Integer.toString(res02.size()));
-		String cabecera = "Consulta1:\nClientes con cuenta corriente";
-		cabecera += "con nombre de menos de 7 letras\n";
-		System.out.println(cabecera);
 		for(Corriente co : res02){
-			System.out.println(co.getIBAN());
-			System.out.println(co.getOficina().getDireccion());
+			System.out.println(co.getOficina().getDireccion()+"\n");
 		}
 		
 		
 		//CONSULTA 1
-		cabecera = "Consulta2:\"Cantidad media movida por oficina";
+		cabecera = "Consulta 2: Cantidad media movida por oficina\n";
 		System.out.println(cabecera);
 		String q1 = "select o from H_OFICINA o";
 		Query query1 = em.createQuery(q1);
@@ -322,25 +320,28 @@ public class Test3 {
 				i++;
 			}
 			sumaSaldo = sumaSaldo/i;
-			System.out.println(o.getDireccion()+"    "+Double.toString(sumaSaldo));
+			System.out.println(o.getDireccion()+"    "+Double.toString(sumaSaldo)+"\n");
 		}
 		
 		//CONSULTA 2
+        System.out.println("\nConsulta 3:\nCuentas corrientes con saldo menor"
+        		+ "que diez y la oficina\n"
+        		+ "donde estan domiciliadas\n");
         String q2 = "select cor from H_CORRIENTE cor "
                 + "where cor.saldo<10";
         Query query2 = em.createQuery(q2);
         List<Corriente> res2 = query2.getResultList();
-        System.out.println("\nConsulta 3:\n\n" + q2 +"\n");
         for(Corriente co2 : res2){
             System.out.println(co2.getIBAN()+" - "+co2.getOficina().getDireccion()+"\n");
         }
 		
 		
 		//CONSULTA 3
-		Query q3 = em.createNativeQuery("SELECT * FROM H_CUENTA"
+		cabecera = "\nConsulta 4:Trasferencias recibidas por la cuenta de mayor saldo\n";
+		System.out.println(cabecera);
+        Query q3 = em.createNativeQuery("SELECT * FROM H_CUENTA"
 				+ " where saldo in (select max(saldo) from H_Cuenta)", Cuenta.class);
 		List<Cuenta> res3 = q3.getResultList();
-		System.out.println("\nConsulta 2:\n");
 		for(Cuenta cc: res3){
 			Query q4 = em.createNativeQuery("SELECT * FROM H_OPERACION"
 					+ " where cuentaOrigen_IBAN=\'"+cc.getIBAN()+"\'", Transferencia.class);
@@ -349,6 +350,30 @@ public class Test3 {
 				System.out.println("\nTransferencia con code "+t.getCodigo()+" de "
 						+t.getCuentaOrigen().getIBAN()+" a "+t.getCuenta().getIBAN()+"\n");
 			}
+		}
+		
+		//Pa la de luego
+		cabecera = "Consulta 5: Cantidad media movida por oficina\n";
+		System.out.println(cabecera);
+		String q5 = "select iR from H_INGRESORETIRADA iR";
+		Query query5 = em.createQuery(q5);
+		List<IngresoRetirada> res5 = query5.getResultList();
+		q5 = "select o from H_OFICINA o";
+		query5 = em.createQuery(q5);
+		List<Oficina> res6 = query5.getResultList();
+		System.out.println("OFICINA      Cantidad Media Movida");
+		for(Oficina o: res6){
+			int i=0;
+			double sumaSaldo=0;
+			for(IngresoRetirada iR: res5){
+				if(iR.getOficina().getCodigo()==o.getCodigo()){
+					sumaSaldo += Math.abs(iR.getCantidad());
+					i++;
+				}
+			}
+			if(i!=0){ sumaSaldo = sumaSaldo/i; }
+			else{ sumaSaldo = 0;}
+			System.out.println(o.getDireccion()+"    "+Double.toString(sumaSaldo)+"\n");
 		}
 	}
 	
