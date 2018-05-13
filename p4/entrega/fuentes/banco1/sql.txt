@@ -1,0 +1,16 @@
+Hibernate: drop table H_CLIENTE cascade constraints
+Hibernate: drop table H_CLIENTE_H_CUENTA cascade constraints
+Hibernate: drop table H_CUENTA cascade constraints
+Hibernate: drop table H_OFICINA cascade constraints
+Hibernate: drop table H_OPERACION cascade constraints
+Hibernate: create table H_CLIENTE (DNI varchar2(255 char) not null, APELLIDOS varchar2(255 char), DIRECCION varchar2(255 char), EMAIL varchar2(255 char), FECHANAC date, NOMBRE varchar2(255 char), primary key (DNI))
+Hibernate: create table H_CLIENTE_H_CUENTA (clientes_DNI varchar2(255 char) not null, cuentas_IBAN varchar2(255 char) not null, primary key (clientes_DNI, cuentas_IBAN))
+Hibernate: create table H_CUENTA (DTYPE varchar2(31 char) not null, IBAN varchar2(255 char) not null, CCC number(10,0), FECHA_CREACION date, SALDO number(10,0), INTERES double precision, oficina_CODIGO number(10,0), primary key (IBAN))
+Hibernate: create table H_OFICINA (CODIGO number(10,0) not null, DIRECCION varchar2(255 char), TELEFONO number(10,0), primary key (CODIGO))
+Hibernate: create table H_OPERACION (DTYPE varchar2(31 char) not null, CODIGO number(10,0) not null, CANTIDAD double precision, DESCRIPCION varchar2(255 char), FECHA date, HORA varchar2(255 char), cuentaOrigen_IBAN varchar2(255 char), oficina_CODIGO number(10,0), cuenta_IBAN varchar2(255 char), primary key (CODIGO))
+Hibernate: alter table H_CLIENTE_H_CUENTA add constraint FK3437FBD4C5181A foreign key (cuentas_IBAN) references H_CUENTA
+Hibernate: alter table H_CLIENTE_H_CUENTA add constraint FK3437FB107AB85B foreign key (clientes_DNI) references H_CLIENTE
+Hibernate: alter table H_CUENTA add constraint FK4FE7A81FFFFC1620 foreign key (oficina_CODIGO) references H_OFICINA
+Hibernate: alter table H_OPERACION add constraint FK90BE6BC12CA35CB3 foreign key (cuentaOrigen_IBAN) references H_CUENTA
+Hibernate: alter table H_OPERACION add constraint FK90BE6BC1D044DB1D foreign key (cuenta_IBAN) references H_CUENTA
+Hibernate: alter table H_OPERACION add constraint FK90BE6BC1FFFC1620 foreign key (oficina_CODIGO) references H_OFICINA

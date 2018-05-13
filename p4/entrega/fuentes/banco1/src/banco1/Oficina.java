@@ -66,7 +66,13 @@ public class Oficina {
 		this.corrientes = corrientes;
 	}
 
-	
+	public Set<IngresoRetirada> getIngresoRetirada() {
+		return ingresoRetirada;
+	}
+
+	public void setIngresoRetirada(Set<IngresoRetirada> ingresoRetirada) {
+		this.ingresoRetirada = ingresoRetirada;
+	}
 	
 		
 

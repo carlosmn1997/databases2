@@ -8,8 +8,10 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="client"/>
+			<item value="avg"/>
+			<item value="mean"/>
 			<item value="H_"/>
+			<item value="client"/>
 			<item value="im"/>
 			<item value="oficina"/>
 			<item value="add"/>
@@ -21,8 +23,6 @@
 			<item value="H_CL"/>
 			<item value="PersistenceO"/>
 			<item value="Persistence.x"/>
-			<item value="Persistence"/>
-			<item value="persistance"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

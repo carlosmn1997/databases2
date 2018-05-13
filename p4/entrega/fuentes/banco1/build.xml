@@ -35,7 +35,7 @@
 
 
     <target name="run" depends="compile">
-        <java classname="test.Test4" fork="true" classpathref="libraries">
+        <java classname="test.Test" fork="true" classpathref="libraries">
             <classpath path="${targetdir}"/>
 			<!-- <sysproperty key="java.net.preferIPv4Stack" value="false"/> -->
         </java>
