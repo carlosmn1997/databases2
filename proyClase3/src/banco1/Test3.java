@@ -352,7 +352,7 @@ public class Test3 {
 			}
 		}
 		
-		//Pa la de luego
+		//Consulta cambiada
 		cabecera = "Consulta 5: Cantidad media movida por oficina\n";
 		System.out.println(cabecera);
 		String q5 = "select iR from H_INGRESORETIRADA iR";

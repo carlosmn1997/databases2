@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="H"/>
 			<item value="avg"/>
 			<item value="mean"/>
 			<item value="H_"/>
@@ -22,7 +23,6 @@
 			<item value="cuenta"/>
 			<item value="H_CL"/>
 			<item value="PersistenceO"/>
-			<item value="Persistence.x"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

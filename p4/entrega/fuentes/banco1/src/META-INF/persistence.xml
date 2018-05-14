@@ -12,8 +12,8 @@
 		   
 		   <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
 		   <property name="javax.persistence.jdbc.url" value=" jdbc:oracle:thin:@hendrix-oracle.cps.unizar.es:1521:vicious"/>
-		<property name="javax.persistence.jdbc.user" value="a721808"/>
-		   <property name="javax.persistence.jdbc.password" value="BDnv17"/>
+		<property name="javax.persistence.jdbc.user" value="----"/>
+		   <property name="javax.persistence.jdbc.password" value="----"/>
 		   
 		</properties>
 	</persistence-unit>
