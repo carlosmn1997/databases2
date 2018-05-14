@@ -337,7 +337,7 @@ public class Test3 {
 		
 		
 		//CONSULTA 3
-		cabecera = "\nConsulta 4:Trasferencias recibidas por la cuenta de mayor saldo\n";
+		cabecera = "\nConsulta 4:Transferencias recibidas por la cuenta de mayor saldo\n";
 		System.out.println(cabecera);
         Query q3 = em.createNativeQuery("SELECT * FROM H_CUENTA"
 				+ " where saldo in (select max(saldo) from H_Cuenta)", Cuenta.class);
