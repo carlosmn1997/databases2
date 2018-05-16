@@ -1,0 +1,25 @@
+modo pseudodistribuido! sale en la documentación como hacerlo
+
+hay un libro en la pag 301 de como meter la tabla en hbase con map/reduce
+
+hacer 20 iteraciones para entrenar la regresion
+
+http//localhost:50070 -> sistema de ficheros virtual (HDFS)
+
+$  hdfs dfs -ls,-mkdir,-gets,-puts
+
+El HDFS está corriendo en el puerto 9000
+
+Al configurar HBASE, configurarlo para el puerto 9000 del sistema de ficheros distribuido
+
+Instalar xfc4, gestor de ventanas, e instalar eclipse ahi
+
+Las documentaciones mirar las de moodle, ya que son las de las versiones que se están utilizando
+
+eclipse ide for java developers
+
+el data.csv ponerlo en hadoop o en sistema local de ficheros, pero se ha de indicar
+
+si se cambia el blocksize en eclipse se tiene que cambiar también en la configuración de Hadoop
+
+dentro del bucle hacer el map/reduce
